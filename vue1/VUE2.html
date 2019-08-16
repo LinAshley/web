@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app-2">
+	<input v-model="message" placeholder="edit me">
+	<p>Message is: {{ message }}</p>
+	
+	<hr>
+	<div>
+  <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+  <label for="jack">Jack</label>
+  <input type="checkbox" id="john" value="John" v-model="checkedNames">
+  <label for="john">John</label>
+  <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+  <label for="mike">Mike</label>
+  <br>
+  <span>Checked names: {{ checkedNames }}</span>
+	</div>
+	
+	<hr>
+	<input type="checkbox" id="checkbox" v-model="checked">
+	<label for="checkbox">{{ checked }}</label>
+	
+	<hr>
+	<input type="radio" id="one" value="One" v-model="picked">
+  <label for="one">One</label>
+  <br>
+  <input type="radio" id="two" value="Two" v-model="picked">
+  <label for="two">Two</label>
+  <br>
+  <span>Picked: {{ picked }}</span>
+  
+  <hr>
+  <select v-model="selected">
+    <option disabled value="">请选择</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+  <span>Selected: {{ selected }}</span>
+  
+  <hr>
+  <select v-model="selected2" multiple style="width: 50px;">
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+  <br>
+  <span>Selected: {{ selected2 }}</span>
+  
+  <hr>
+  <select v-model="selected3">
+  <option v-for="option in options" v-bind:value="option.value">
+    {{ option.text }}
+  </option>
+</select>
+<span>Selected: {{ selected3 }}</span>
+  
+</div>
+<script>
+var app2 = new Vue({
+  el: '#app-2',
+  data: {
+    message: '',
+	checkedNames: [],
+	checked:false,
+	picked:'',
+	selected:'',
+	selected2:[],
+	selected3:'A',
+	options:[
+		{text:'one',value:'A'},
+		{text:'two',value:'B'},
+		{text:'three',value:'C'},
+	],
+  },
+})
+</script>
+</body>
+</html>

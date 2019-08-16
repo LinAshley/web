@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app-2">
+  <span v-bind:title="message">
+    鼠标悬停几秒钟查看此处动态绑定的提示信息！
+  </span>
+  <button v-on:click="reverseMessage">逆转消息</button>
+  <p v-if="seen">看到我了</p>
+  <ol>
+    <li v-for="todo in todos">
+      {{ todo.text }}
+    </li>
+  </ol>
+    <p>{{ text }}</p>
+  <input v-model="text">
+  
+  <ol>
+  <!-- 创建一个 todo-item 组件的实例 -->
+  <todo-item v-for="item in groceryList"
+      v-bind:todo="item"
+      v-bind:key="item.id">
+   </todo-item>
+</ol>
+
+<div v-if="awesome">Vue is awesome!</div>
+<div v-else>Oh no 😢</div>
+
+</div>
+<script>
+Vue.component('todo-item', {
+  // todo-item 组件现在接受一个"prop"，类似于一个自定义特性。这个 prop 名为 todo。
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+})
+var app2 = new Vue({
+  el: '#app-2',
+  data: {
+    message: '页面加载于 ',
+	seen:false,
+	todos:[
+	{text:'学习'},
+	{text:'javascript'},
+	{text:'成功'}
+	],
+	text:'hello,world!',
+	groceryList: [
+      { id: 0, text: '蔬菜' },
+      { id: 1, text: '奶酪' },
+      { id: 2, text: '随便其它什么人吃的东西' }
+    ],
+	awesome:false
+  },
+  methods:{
+    reverseMessage:function(){
+	    this.message=this.message.split('').reverse().join('')
+	},
+  }
+})
+</script>
+</body>
+</html>
