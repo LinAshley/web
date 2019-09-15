@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oop</title>
+</head>
+<body>
+    <script>
+        //总的订单数组
+        let order=[];
+        let clerkID=0;//职员ID
+
+        //餐厅类
+        function Restaurant(money,seatnum){
+            this.money=money;//金钱
+            this.seatnum=seatnum;//座位数量
+            this.staff=[];//职员表
+        }
+        Restaurant.prototype={
+            //招聘职员
+            recruit:function(newClerk){
+                this.staff.push(newClerk);
+                console.log(this.staff);
+            },
+            //解雇职员
+            fire:function(clerk){
+                for(let i=0;i<this.staff.length;i++){
+                    if(clerk.ID==this.staff[i].ID){
+                        this.staff.splice(i,1);
+                    }
+                }
+            }
+        }
+
+        //职员类
+        function Clerk(name,wage){
+            this.ID=clerkID++;//ID
+            this.name=name;//姓名
+            this.wage=wage;//工资
+        }
+        Clerk.prototype={
+            //完成一次工作
+            doOnceWork:function(){
+                alert("work done!");
+            }
+        }
+
+        //服务员类,继承自职员类
+        function Waiter(name,wage){
+            Clerk.call(this,name,wage);
+            this.prototype=Object.create(Clerk.prototype);
+            Waiter.prototype.constructor=Clerk;
+        }
+        Waiter.prototype.doOnceWork=function(value){
+            if(value instanceof Array){
+                order.push(value);
+            }
+            else{
+                alert("This is your dish.");
+            }
+        }
+
+        //厨师类,继承自职员
+        function Cook(name,wage){
+            Clerk.call(this,name,wage);
+        }
+        Cook.prototype.doOnceWork=function(){
+            alert("cook is finished");
+        }
+
+        //顾客类
+        function Customer(id){
+            this.id=id;//顾客号数
+        }
+        Customer.prototype={
+            //点菜
+            order:function(array){
+                let menu={};
+                menu.id=this.id;
+                menu.dishes=array;
+                return menu;
+            },
+            eat:function(){
+                alert("I'm enjoying my meal.");
+            }
+        }
+
+        //菜品类
+        function Dish(name,cost,price){
+            this.name=name;//名字
+            this.cost=cost;//烹饪成本
+            this.price=price;//价格
+        }
+
+        window.onload=function(){
+            var ifeRestaurant=new Restaurant(1000000,20);
+            console.log(ifeRestaurant);
+            var newCook=new Cook("Tony",10000);
+            console.log(newCook);
+            ifeRestaurant.recruit(newCook);
+
+            console.log(ifeRestaurant.staff);
+
+            ifeRestaurant.fire(newCook);
+            console.log(ifeRestaurant.staff);
+        }
+    </script>
+</body>
+</html>

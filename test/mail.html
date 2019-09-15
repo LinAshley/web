@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mail</title>
+    <style>
+        ul{
+            list-style: none;
+        }
+        ul li{
+            width: 150px;
+        }
+        ul li:hover{
+            background-color: blue;
+            color: aliceblue;
+            cursor:pointer;
+        }
+        .change{
+            background-color: blue;
+            color: aliceblue;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <input id="email-input" type="text">
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
+    </div>
+
+    <script>
+        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+        window.onload=function(){
+            document.querySelector("input").focus();
+            initiate();//初始化列表的index
+        }
+        document.querySelector("#email-input").oninput= function() {
+            //获取用户输入，生成提示框中的提示内容，将提示内容添加到email-sug-
+            addtoul();
+            //控制email-sug-wrapper的显示/隐藏状态
+            showswitch();
+        }
+
+        document.querySelector("ul").onclick=function(e){
+            //获取被点击Li对应的提示内容
+            let content=e.target.innerHTML;
+            //将内容放到input输入框中
+            document.querySelector("input").value=content;
+            //隐藏输入框
+            document.querySelector("ul").style.display="none";
+            document.querySelector("input").select();
+        }
+
+        function getinput() {
+            //拿到input输入框的输入内容trim后返回   
+            return document.querySelector("#email-input").value.trim(); 
+        }
+
+        function hinder() {
+            //获取用户输入
+            let input=getinput();
+            let front,behind;
+            let flag=0;
+            let lis=new Array();
+            //如果包含有@字符则使用@字符前的字符串进行拼接
+            if(input.indexOf("@")>0){
+                front=input.substring(0,input.indexOf("@"));
+                behind=input.substring(input.indexOf("@")+1,input.length+1);
+                for(let i=0;i<postfixList.length;i++) {
+                    //如果用户输入@后的字符与匹配数组中相同，则拼接成一个字符串
+                    if(postfixList[i].indexOf(behind)==0){
+                        lis.push(front+"@"+postfixList[i]);
+                        flag=1;
+                    }
+                }
+                 //如果用户输入与数组中任何提示都不匹配，则显示全部匹配
+                if(flag==0){
+                    for(let i=0;i<postfixList.length;i++){
+                        lis[i]=front+"@"+postfixList[i];
+                    }
+                }
+            }
+            else{
+                //遍历postfixList
+                for(let i=0;i<postfixList.length;i++){
+                    lis[i]=input+"@"+postfixList[i];
+                }
+            }
+            //返回生成的提示内容
+            return lis;
+        }
+
+        function addtoul() {
+            //获取生成提示框中的提示内容
+            let lis=new Array();
+            lis=hinder();
+            //将内容添加到email-sug-wrapper中
+            let ul=document.querySelector("#email-sug-wrapper");
+            //清除上次的匹配
+            let old=ul.querySelectorAll("li");
+            for(let i=0;i<old.length;i++){
+                old[i].parentNode.removeChild(old[i]);
+            }
+            for(let i=0;i<lis.length;i++){
+                let li=document.createElement("li");
+                li.textContent=lis[i];
+                ul.appendChild(li);
+            }
+        }
+
+        function showswitch() {
+            let ul=document.querySelector("#email-sug-wrapper");
+            if(getinput()==""){
+                //隐藏提示框
+                ul.style.display="none";
+            } else {
+                //显示提示框
+                ul.style.display="block";
+            }
+        }
+
+        function reset(){
+            //找到当前为选中状态的Li
+            let choosedli=document.querySelector("ul li[class='change']");
+            if (choosedli.index!==0) {
+                //清除掉它的选中状态
+                choosedli.className="";
+                //设置第一个Li为选中状态
+                document.querySelector("li").className="change";
+            }
+        }
+
+        function initiate(){
+            groups=document.querySelectorAll("li");
+            for(let i=0;i<groups.length;i++){
+                groups[i].index=i;
+                if(i==0){
+                    groups[i].className="change";
+                }
+                console.log(i);
+            }
+        }
+        // 监听特殊3个键的键盘事件
+        document.querySelector("ul").onkeypress = function(e) {
+            //找到当前为选中状态的Li
+            let selected=document.querySelector("ul li[class='change']");
+            let groups=document.querySelectorAll("li");
+            //清除掉它的选中状态
+            selected.className="";
+            if(e.keyCode==38){
+                if(selected.index!==0){
+                    //将它的前一个Li设为选中
+                    groups[selected.index-1].className="change";
+                } else {
+                    //将最后一个Li设为选中
+                    groups[groups.length-1].className="change";
+                }
+            }
+            if(e.keyCode==40){
+                if(selected.index!=groups.length-1){
+                    //将它的下一个Li设为选中
+                    groups[selected.index+1].className="change";
+                } else {
+                    //将第一个Li设为选中
+                    groups[0].className="change";
+                }   
+            }
+            if(e.keyCode==13){
+                //将找到的Li的HTML内容解码后填到input中
+                document.querySelector("input").value=selected.innerHTML;
+                //隐藏提示框
+                document.querySelector("ul").style.display="none";
+            }
+        }
+    </script>
+</body>
+</html>

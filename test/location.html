@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>location</title>
+</head>
+<body>
+    <button id="a">A</button>
+    <button id="b">B</button>
+    <button id="c">C</button>
+    <button id="d">D</button>
+    <button id="e">E</button>
+    <button id="f">F</button>
+    <div id="contABC">one</div>
+    <div id="contDEF">two</div>
+
+    <script>
+        //解析Hash，获取状态参数
+        function getstatus() {
+            //取到需要的值，并返回
+            let status=location.hash;
+            console.log(status);
+            return status;
+        }
+        //渲染函数
+        function show() {
+            let content = getstatus();
+            let abc="ABC";
+            let def="DEF";
+            if(abc.indexOf(content.substr(1,1))>=0){
+                document.querySelector("#contABC").innerHTML=content;
+                
+            }
+            else{
+                document.querySelector("#contDEF").innerHTML =content;
+            }
+        }
+
+        //按钮点击事件 
+        let buttons=document.querySelectorAll("button");
+        for(let i=0;i<buttons.length;i++){
+            buttons[i].onclick=function(e) {
+                location.hash=e.target.innerHTML;
+                show();
+            }
+        }
+
+        window.onhashchange = show();
+
+        //进来先执行一次渲染函数
+        window.onload=function(){
+            show();
+        }
+    </script>
+</body>
+</html>

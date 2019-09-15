@@ -1,0 +1,19 @@
+main { display: flex; background-color: antiquewhite;}
+main > article { order: 2; min-width: 12em; flex:1; background-color: red;}
+main > nav     { order: 1; width: 200px; background-color: green;}
+main > aside   { order: 3; width: 200px; background-color: blue;}
+
+@media all and (max-width: 600px) {
+    /* Too narrow to support three columns */
+    main { flex-flow: column; }
+    main > article, main > nav, main > aside {
+      /* Return them to document order */
+      order: 0; width: auto;
+    }
+  }
+div > ul {
+    display: flex;
+  }
+div > ul > #login {
+    margin-left: auto;
+  }

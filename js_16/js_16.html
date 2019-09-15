@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript</title>
+</head>
+<body>        
+    <input id="first-number" type="number" value="0" placeholder="第一个数字">
+    <input id="second-number" type="number" value="0" placeholder="第二个数字">
+    <button id="add-btn">加</button>
+    <button id="minus-btn">减</button>
+    <button id="times-btn">乘</button>
+    <button id="divide-btn">除</button>
+    <p id="result">运算结果</p>
+    <script>
+        let add=document.getElementById("add-btn");
+        add.addEventListener("click",add_f);
+        let minus=document.getElementById("minus-btn");
+        minus.addEventListener("click",minus_f);
+        let times=document.getElementById("times-btn");
+        times.addEventListener("click",tims_f);
+        let divide=document.getElementById("divide-btn");
+        divide.addEventListener("click",divide_f);
+
+        let result;
+        function add_f(){
+            let fn=document.getElementById("first-number").value;
+            let sn=document.getElementById("second-number").value;
+            result=fn + sn;
+            document.getElementById("result").innerHTML=result;
+        }
+        function minus_f(){
+            let fn=document.getElementById("first-number").value;
+            let sn=document.getElementById("second-number").value;
+            result=fn-sn;
+            document.getElementById("result").innerHTML=result;
+        }
+        function tims_f(){
+            let fn=document.getElementById("first-number").value;
+            let sn=document.getElementById("second-number").value;
+            result=fn*sn;
+            document.getElementById("result").innerHTML=result;
+        }
+        function divide_f(){
+            let fn=document.getElementById("first-number").value;
+            let sn=document.getElementById("second-number").value;
+            result=fn/sn;
+            document.getElementById("result").innerHTML=result;
+        }
+
+       
+    </script>
+</body>
+</html>

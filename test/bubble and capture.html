@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>bubbling and capture</title>
+    </head>
+    <body>
+        <div id="myDiv1">
+            <h2>Bubbling:</h2>
+            <p id="myP1">锟斤拷锟斤拷锟揭ｏ拷</p>
+          </div><br>
+          
+          <div id="myDiv2">
+            <h2>Capturing:</h2>
+            <p id="myP2">锟斤拷锟斤拷锟揭ｏ拷</p>
+          </div>
+          
+          <script>
+          document.getElementById("myP1").addEventListener("click", function() {
+            alert("p");
+          }, false);
+          
+          document.getElementById("myDiv1").addEventListener("click", function() {
+            alert("div");
+          }, false);
+          
+          document.getElementById("myP2").addEventListener("click", function() {
+            alert("p");
+          }, true);
+          
+          document.getElementById("myDiv2").addEventListener("click", function() {
+            alert("div");
+          }, true);
+          </script>
+    </body>
+</html>
